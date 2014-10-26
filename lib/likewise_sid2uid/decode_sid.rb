@@ -1,4 +1,5 @@
 module LikewiseSid2uid
+
   def self.decode_sid(sid_packed)
     sid = sid_packed.unpack('C*')
 
@@ -24,7 +25,12 @@ module LikewiseSid2uid
     while i < word_count
       sid_part = ''
       (0..3).each do |j|
-        sid_part.prepend(sid[8+(i*4)+j].to_s(base=16))
+        case self.endianness
+          when 'LITTLE'
+            sid_part.prepend(sid[8+(i*4)+j].to_s(base=16))
+          when 'BIG'
+            sid_part << sid[8+(i*4)+j].to_s(base=16)
+        end
       end
       sid_string << '-%i' % sid_part.to_i(16)
       i += 1
@@ -32,4 +38,5 @@ module LikewiseSid2uid
 
     sid_string
   end
+
 end

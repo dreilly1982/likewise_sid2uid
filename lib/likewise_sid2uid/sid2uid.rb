@@ -1,4 +1,5 @@
 module LikewiseSid2uid
+
   def self.sid2uid(sid_string)
     sid_string_delim = '-'
     parse_mode = 'PARSE_MODE_OPEN'
@@ -36,10 +37,10 @@ module LikewiseSid2uid
 
     uid_hash = 0
 
-    if tail.count() > 3
-      uid_hash ^= tail[tail.count() - 4]
-      uid_hash ^= tail[tail.count() - 3]
-      uid_hash ^= tail[tail.count() - 2]
+    if tail.count > 3
+      uid_hash ^= tail[tail.count - 4]
+      uid_hash ^= tail[tail.count - 3]
+      uid_hash ^= tail[tail.count - 2]
     end
 
     uid_hash_temp = uid_hash
@@ -50,8 +51,9 @@ module LikewiseSid2uid
     uid_hash &= 0x00000FFF
 
     uid_hash <<= 19
-    uid_hash += (tail[tail.count() - 1] & 0x0007FFFF)
+    uid_hash += (tail[tail.count - 1] & 0x0007FFFF)
 
     uid_hash
   end
+
 end
